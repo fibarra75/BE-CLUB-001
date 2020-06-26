@@ -15,28 +15,40 @@ namespace ApiClub.Controllers
         public IEnumerable<Socio> Get()
         {
             //return new string[] { "value1", "value2" };
-            return repo.ListaSocios1();
+            return repo.ListaSocios();
         }
 
         // GET: api/Socio/5
-        public string Get(int id)
+        [HttpGet]
+        [Route("api/socio/{rut}")]
+        public Socio Get(int rut)
         {
-            return "value";
+            return repo.ObtenerSocio(rut);
         }
 
         // POST: api/Socio
-        public void Post([FromBody]string value)
+        public void Post([FromBody] Socio socio)
         {
+
+            repo.CrearSocio(socio);
         }
 
         // PUT: api/Socio/5
-        public void Put(int id, [FromBody]string value)
+        [HttpPut]
+        [Route("api/socio/{rut}")]
+        public void Put(int rut, [FromBody]Socio socio)
         {
+            //El verbo HTTP PUT no es sportado naturalmente por el Web API
+
+            repo.ModificarSocio(rut, socio);
         }
 
         // DELETE: api/Socio/5
-        public void Delete(int id)
+        [HttpDelete]
+        [Route("api/socio/{rut}")]
+        public void Delete(int rut)
         {
+            repo.EliminarSocio(rut);
         }
     }
 }
