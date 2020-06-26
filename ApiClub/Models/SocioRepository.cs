@@ -103,7 +103,7 @@ namespace ApiClub.Models
             {
                 reader = cmd.ExecuteReader();
 
-                while (reader.Read())
+                if (reader.Read())
                 {
                     socio = new Socio();
 
