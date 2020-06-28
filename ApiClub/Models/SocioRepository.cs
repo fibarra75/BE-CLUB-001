@@ -62,6 +62,20 @@ namespace ApiClub.Models
                     socio.Nombres = Convert.ToString(reader["NOMBRES"]);
                     socio.Apaterno = Convert.ToString(reader["APATERNO"]);
                     socio.Amaterno = Convert.ToString(reader["AMATERNO"]);
+                    socio.Sexo = Convert.ToString(reader["SEXO"]);
+                    socio.FechaNacimiento = Convert.ToDateTime(reader["FENAC"]);
+                    socio.Correo = Convert.ToString(reader["CORREO"]);
+
+                    socio.NumeroCelular = 0;
+                    if (reader["NROCELULAR"] != DBNull.Value)
+                    {
+                        socio.NumeroCelular = Convert.ToInt32(reader["NROCELULAR"]);
+                    }
+
+                    socio.TipoSocio = Convert.ToInt32(reader["TIPOSOCIO"]);
+                    socio.IdEstado = Convert.ToInt32(reader["IDESTADO"]);
+                    socio.FecCreacion = Convert.ToDateTime(reader["FECRE"]);
+                    //socio.FecModificacion = Convert.ToDateTime(reader["FEMOD"]);
 
                     listaSocios.Add(socio);
                 }
@@ -113,6 +127,14 @@ namespace ApiClub.Models
                     socio.Nombres = Convert.ToString(reader["NOMBRES"]);
                     socio.Apaterno = Convert.ToString(reader["APATERNO"]);
                     socio.Amaterno = Convert.ToString(reader["AMATERNO"]);
+                    socio.Sexo = Convert.ToString(reader["SEXO"]);
+                    socio.FechaNacimiento = Convert.ToDateTime(reader["FENAC"]);
+                    socio.Correo = Convert.ToString(reader["CORREO"]);
+                    socio.NumeroCelular = Convert.ToInt32(reader["NROCELULAR"]);
+                    socio.TipoSocio = Convert.ToInt32(reader["TIPOSOCIO"]);
+                    socio.IdEstado = Convert.ToInt32(reader["IDESTADO"]);
+                    socio.FecCreacion = Convert.ToDateTime(reader["FECRE"]);
+                    //socio.FecModificacion = Convert.ToDateTime(reader["FEMOD"]);
                 }
             }
             catch (Exception ex)
@@ -143,10 +165,13 @@ namespace ApiClub.Models
             cmd.Parameters.Add("P_NOMBRES", OracleDbType.NVarchar2, socio.Nombres, ParameterDirection.Input);
             cmd.Parameters.Add("P_APATERNO", OracleDbType.NVarchar2, socio.Apaterno, ParameterDirection.Input);
             cmd.Parameters.Add("P_AMATERNO", OracleDbType.NVarchar2, socio.Amaterno, ParameterDirection.Input);
-            cmd.Parameters.Add("P_SEXO", OracleDbType.Varchar2, "M", ParameterDirection.Input);
+            cmd.Parameters.Add("P_SEXO", OracleDbType.Varchar2, socio.Sexo, ParameterDirection.Input);
             cmd.Parameters.Add("P_FENAC", OracleDbType.Date, socio.FechaNacimiento, ParameterDirection.Input);
-            cmd.Parameters.Add("P_CORREO", OracleDbType.NVarchar2, System.DBNull.Value, ParameterDirection.Input);
-            cmd.Parameters.Add("P_NROCELULAR", OracleDbType.Decimal, System.DBNull.Value, ParameterDirection.Input);
+            cmd.Parameters.Add("P_CORREO", OracleDbType.NVarchar2, socio.Correo, ParameterDirection.Input);
+            cmd.Parameters.Add("P_NROCELULAR", OracleDbType.Int32, socio.NumeroCelular, ParameterDirection.Input);
+            cmd.Parameters.Add("P_TIPOSOCIO", OracleDbType.Int32, socio.TipoSocio, ParameterDirection.Input);
+            cmd.Parameters.Add("P_ERRCOD", OracleDbType.Int32, DBNull.Value, ParameterDirection.Output);
+            cmd.Parameters.Add("P_ERRMSG", OracleDbType.Varchar2, 255, DBNull.Value, ParameterDirection.Output);
 
             //cmd.Parameters.Add("P_ERRCOD", OracleDbType.Int32).Direction = ParameterDirection.Output;
             //cmd.Parameters.Add("P_ERRMSG", OracleDbType.Varchar2).Direction = ParameterDirection.Output;
@@ -177,14 +202,16 @@ namespace ApiClub.Models
             OracleCommand cmd = new OracleCommand("PKG_SOCIO_CRUD.PRC_MODIFICAR_SOCIO", con);
             cmd.CommandType = CommandType.StoredProcedure;
 
-            cmd.Parameters.Add("P_RUT", OracleDbType.Int32, rut, ParameterDirection.Input);            
+            cmd.Parameters.Add("P_RUT", OracleDbType.Int32, rut, ParameterDirection.Input);
             cmd.Parameters.Add("P_NOMBRES", OracleDbType.NVarchar2, socio.Nombres, ParameterDirection.Input);
             cmd.Parameters.Add("P_APATERNO", OracleDbType.NVarchar2, socio.Apaterno, ParameterDirection.Input);
             cmd.Parameters.Add("P_AMATERNO", OracleDbType.NVarchar2, socio.Amaterno, ParameterDirection.Input);
-            cmd.Parameters.Add("P_SEXO", OracleDbType.Varchar2, "M", ParameterDirection.Input);
+            cmd.Parameters.Add("P_SEXO", OracleDbType.Varchar2, socio.Sexo, ParameterDirection.Input);
             cmd.Parameters.Add("P_FENAC", OracleDbType.Date, socio.FechaNacimiento, ParameterDirection.Input);
-            cmd.Parameters.Add("P_CORREO", OracleDbType.NVarchar2, System.DBNull.Value, ParameterDirection.Input);
-            cmd.Parameters.Add("P_NROCELULAR", OracleDbType.Decimal, System.DBNull.Value, ParameterDirection.Input);
+            cmd.Parameters.Add("P_CORREO", OracleDbType.NVarchar2, socio.Correo, ParameterDirection.Input);
+            cmd.Parameters.Add("P_NROCELULAR", OracleDbType.Int32, socio.NumeroCelular, ParameterDirection.Input);
+            cmd.Parameters.Add("P_TIPOSOCIO", OracleDbType.Int32, socio.TipoSocio, ParameterDirection.Input);
+            cmd.Parameters.Add("P_IDESTADO", OracleDbType.Int32, socio.IdEstado, ParameterDirection.Input);
 
             //cmd.Parameters.Add("P_ERRCOD", OracleDbType.Int32).Direction = ParameterDirection.Output;
             //cmd.Parameters.Add("P_ERRMSG", OracleDbType.Varchar2).Direction = ParameterDirection.Output;

@@ -13,6 +13,13 @@ namespace ApiClub.Models
         public string Nombres { get; set; }
         public string Apaterno { get; set; }
         public string Amaterno { get; set; }
+        public string Sexo { get; set; }
         public DateTime FechaNacimiento { get; set; }
+        public string Correo { get; set; }
+        public int NumeroCelular { get; set; }
+        public int TipoSocio { get; set; }
+        public int IdEstado { get; set; }
+        public DateTime FecCreacion { get; set; }
+        public DateTime FecModificacion { get; set; }
     }
 }
